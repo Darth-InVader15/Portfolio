@@ -8,7 +8,7 @@ function Terminal() {
 
   async function fetchArt() {
     try {
-      const response = await fetch("figlet.txt");
+      const response = await fetch("/src/assets/figlet.txt");
       const art = await response.text();
       setFiglet(art);
     } catch (error) {
