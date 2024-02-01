@@ -5,6 +5,7 @@ function Terminal() {
   const [output, setOutput] = useState(['Type `help` to see the list of available commands']);
   const [figlet, setFiglet] = useState('');
   const [user, setUser] = useState('Guest'); // Default user name
+  const [currentText, setCurrentText] = useState('');
 
   async function fetchArt() {
     try {
@@ -23,162 +24,54 @@ function Terminal() {
   const handleCommand = async () => {
     const command = input.trim().toLowerCase();
 
+    // const typeCommand = async (text) => {
+    //     setCurrentText(''); // Reset the current text
+    //   for (const word of text.split(' ')) {
+    //   setCurrentText((prevText) => prevText + word + ' ');
+    //   await new Promise((resolve) => setTimeout(resolve, 100)); 
+    //   }
+    // };
+
     if (command.startsWith('setuser '))
     {
       const newUserName = command.replace('setuser ', '');
       setUser(newUserName);
-      setOutput(prevOutput => [ ...prevOutput,
+      const res = "User name set to: " + newUserName;
+      printOut(res);  
+    } 
+    else{
+      try {
+        const response = await fetch(`/src/assets/${command}.txt`);
+        console.log("here");
+        if(response.status === 200 && response.headers.get('content-type') === 'text/plain')
+        {
+          console.log("passed");
+          const cont =  await response.text();
+          printOut(cont);
+        }
+        else
+        {
+          console.log("failed");
+          const statement = "Command not recognized " +command +  " Here's a list of commands you can try:-\n\n " +
+           "about, resume, interests, techstack, projects, currentroles, gui";
+          printOut(statement);      
+        }
+      } catch (error) {
+        console.log("Error fetching data: ", error);
+        return "Error...... Its not you, its us"
+      } 
+    }
+        
+    function printOut(response) {
+      const newOutput = [
         <span key={output.length}>
           <span className='operator'>{user}</span>
           <span id='op'>@darthnet:</span> {input}
-        </span>,  `User name set to: ${newUserName}`]);
-    } 
-
-    else{
-      switch(command)   //will be making seperate components in the future
-      {
-        case 'education':
-        try {
-          const response = await fetch('/src/assets/education.txt'); // 
-          const educationContent = await response.text();
-          setOutput(prevOutput => [ ...prevOutput,
-            <span key={output.length}>
-              <span className='operator'>{user}</span>
-              <span id='op'>@darthnet:</span> {input}
-            </span>,
-            educationContent,
-          ]);
-        } catch (error) {
-          console.error('Error fetching education content:', error);
-        }
-        break;
-
-        case 'projects':
-          try {
-            const response = await fetch('/src/assets/projects.txt'); // 
-            const proContent = await response.text();
-            setOutput(prevOutput => [ ...prevOutput,
-              <span key={output.length}>
-                <span className='operator'>{user}</span>
-                <span id='op'>@darthnet:</span> {input}
-              </span>,
-              proContent,
-            ]);
-          } catch (error) {
-            console.error('Error fetching projects content:', error);
-          }
-          break;
-
-          case 'interests':
-            try {
-              const response = await fetch('/src/assets/interests.txt');
-              const interestsContent = await response.text();
-              setOutput(prevOutput => [
-                ...prevOutput,
-                <span key={prevOutput.length}>
-                  <span className='operator'>{`${user}`}</span>
-                  <span id='op'>@darthnet:</span> {input}
-                </span>,
-                interestsContent,
-              ]);
-            } catch (error) {
-              console.error('Error fetching interests content:', error);
-            }
-            break;
-
-          case 'currentroles':
-            try {
-              const response = await fetch('/src/assets/roles.txt');
-              const currentRolesContent = await response.text();
-              setOutput(prevOutput => [
-                ...prevOutput,
-                <span key={prevOutput.length}>
-                  <span className='operator'>{`${user}`}</span>
-                  <span id='op'>@darthnet:</span> {input}
-                </span>,
-                currentRolesContent,
-              ]);
-            } catch (error) {
-              console.error('Error fetching current roles content:', error);
-            }
-            break;
-
-          case 'techstack':
-            try {
-              const response = await fetch('/src/assets/techstack.txt');
-              const techStackContent = await response.text();
-              setOutput(prevOutput => [
-                ...prevOutput,
-                <span key={prevOutput.length}>
-                  <span className='operator'>{`${user}`}</span>
-                  <span id='op'>@darthnet:</span> {input}
-                </span>,
-                techStackContent,
-              ]);
-            } catch (error) {
-              console.error('Error fetching tech stack content:', error);
-            }
-            break;
-
-          case 'about':
-            try {
-              const response = await fetch('/src/assets/about.txt');
-              const accoladesContent = await response.text();
-              setOutput(prevOutput => [
-                ...prevOutput,
-                <span key={prevOutput.length}>
-                  <span className='operator'>{`${user}`}</span>
-                  <span id='op'>@darthnet:</span> {input}
-                </span>,
-                accoladesContent,
-              ]);
-            } catch (error) {
-              console.error('Error fetching accolades content:', error);
-            }
-            break;
-
-            case 'resume':
-              try {
-                const response = await fetch('/src/assets/resume.txt');
-                const resumeContent = await response.text();
-                setOutput(prevOutput => [
-                  ...prevOutput,
-                  <span key={prevOutput.length}>
-                    <span className='operator'>{`${user}`}</span>
-                    <span id='op'>@darthnet:</span> {input}
-                  </span>,
-                  resumeContent,
-                ]);
-              } catch (error) {
-                console.error('Error fetching accolades content:', error);
-              }
-              break;
-
-
-            case 'gui':
-              setOutput(prevOutput => [
-                ...prevOutput,
-                <span key={prevOutput.length}>
-                  <span className='operator'>{`${user}`}</span>
-                  <span id='op'>@darthnet:</span> {input}
-                </span>,
-                "you can try the gui version, here's the link: 404",
-              ]);
-              break;
-
-        default:
-          setOutput(prevOutput => [
-            ...prevOutput,
-            <span key={output.length}>
-              <span className='operator'>{user}</span>
-              <span id='op'>@darthnet:</span> {input}
-            </span>,
-            `Command not recognized: ${command}`, "Here's a list of commands you can try",
-            "about, resume, interests, techstack, projects, currentroles, gui",
-          ]);
-      }
+        </span>,
+        response,
+      ];
+      setOutput(prevOutput => [...prevOutput, ...newOutput]);
     }
-
     setInput('');
   };
 
@@ -195,6 +88,7 @@ function Terminal() {
         {output.map((line, index) => (
           <p key={index}>{line}</p>
         ))}
+        {/* <p>{currentText}</p> */}
       </div>
       
       <div className="terminal-input">
