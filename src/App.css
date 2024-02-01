@@ -1,5 +1,6 @@
 #root {
-  background-color: black;
+  /* background-color: black; */
+  background-image: "/src/assets/bg.gif";
   color: greenyellow;
   max-width: 1920px;
   margin: 0 auto;

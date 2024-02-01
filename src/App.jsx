@@ -5,7 +5,6 @@ function Terminal() {
   const [output, setOutput] = useState(['Type `help` to see the list of available commands']);
   const [figlet, setFiglet] = useState('');
   const [user, setUser] = useState('Guest'); // Default user name
-  const [currentText, setCurrentText] = useState('');
 
   async function fetchArt() {
     try {
@@ -22,15 +21,8 @@ function Terminal() {
   }, []);
 
   const handleCommand = async () => {
+    
     const command = input.trim().toLowerCase();
-
-    // const typeCommand = async (text) => {
-    //     setCurrentText(''); // Reset the current text
-    //   for (const word of text.split(' ')) {
-    //   setCurrentText((prevText) => prevText + word + ' ');
-    //   await new Promise((resolve) => setTimeout(resolve, 100)); 
-    //   }
-    // };
 
     if (command.startsWith('setuser '))
     {
@@ -39,6 +31,21 @@ function Terminal() {
       const res = "User name set to: " + newUserName;
       printOut(res);  
     } 
+    // else if(command === "kudo pop install fun")
+    // {
+    //   response = "---------Done. \n" + "Try commands like `kanyeq` or `jokeme`";
+    // }
+    else if(command === 'clear')
+      {
+        setOutput([]);
+      }
+    // else if(command === 'kanye')
+    // {
+    //     const response = await fetch("https://api.kanye.rest");
+    //     const txt = await response.data.quote;
+
+    //     printOut(txt);
+    // }
     else{
       try {
         const response = await fetch(`/src/assets/${command}.txt`);
@@ -52,8 +59,13 @@ function Terminal() {
         else
         {
           console.log("failed");
-          const statement = "Command not recognized " +command +  " Here's a list of commands you can try:-\n\n " +
-           "about, resume, interests, techstack, projects, currentroles, gui";
+          if(command !== "help" )
+          {
+            var ment = "Command not recognized: " + command + ". ";
+          }
+          else var ment = "";
+          let statement = ment +  " Here's a list of commands you can try:-\n\n " +
+           "about, interests, techstack, projects, currentroles, gui\n";// + "Or try `kudo pop install fun` to install some fun commands";
           printOut(statement);      
         }
       } catch (error) {
@@ -83,12 +95,11 @@ function Terminal() {
         ))}        
       </div>
 
-      <div className='footer'> Welcome to <span className='tit'>Darth-Shell</span>, a terminal styled portfolio page for <span className='tit'>Darth InVader</span></div>
+      <div className='footer'> Welcome to <span className='tit'>Darth-Shell</span>, a terminal themed portfolio page for <span className='tit'>Darth InVader</span></div>
       <div className="terminal-output">
         {output.map((line, index) => (
           <p key={index}>{line}</p>
         ))}
-        {/* <p>{currentText}</p> */}
       </div>
       
       <div className="terminal-input">

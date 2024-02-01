@@ -1,0 +1,3 @@
+I've worked on multiple projects like:- 8D Sound Converter(Python), EMR Website(MERN + Tailwind), AttenDed(MERN), Prof-Review(ExpressJS), Netflix-clone(ReactJS), 8D Sound Converter.apk(Kotlin), Drumkit(JS,Its addictive);
+
+I've also worked on several Embedded projects like: Labyrinth Solver bot, WiFi controlled bot, and Gesture controlled bot;

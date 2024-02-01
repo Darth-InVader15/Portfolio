@@ -1,5 +1,6 @@
 :root{
   background-color: black;
+  background-image: url(/src/assets/ls.gif);
   color:greenyellow;
   color-scheme: dark;
   text-align: left;
@@ -34,6 +35,12 @@
   justify-content: left;
   
 }
+/* .inline-word {
+  display: inline-block;
+  white-space: nowrap;
+  margin-right: 4px; /* Adjust as needed for spacing between words */
+/* } */ 
+
 
 .terminal-output {
   margin-bottom: 10px;

@@ -1,0 +1,9 @@
+Hello World!
+Piyush is engineering undergrad at NIT Kurukshetra. He's currently in his junior year.
+He likes working on embedded projects and web development projects in his free time.
+He has worked with languages like Cpp, JS, Python, and SQL, and has also worked on several Full-Stack projects.
+
+Piyush also claims to be fluent in writing Assembly code, as it was included in his college course, but can only write small recursive codes at best.
+He thinks he is funny, and always tries to crack unfunny jokes (like the one above). Something else that he always try, is to avoid doing his college's club work.
+
+Anyways, Piyush says hi.
