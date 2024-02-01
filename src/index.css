@@ -1,0 +1,54 @@
+:root{
+  background-color: black;
+  color:greenyellow;
+  color-scheme: dark;
+  text-align: left;
+}
+.tit{
+  color: red;
+}
+.figlet{
+  color:white;
+  margin-top: 10%;
+  margin-bottom: 2%;
+  text-align: left;
+}
+.operator{
+  color:red;
+}
+#op{
+  color:rgb(132, 36, 210)
+}
+.footer{
+  margin-bottom: 20%;
+  color: greenyellow;
+}
+.terminal-container {
+  font-family: 'Courier New', monospace;
+  background-color: black;
+  /* color: rgb(255, 255, 255); */
+  padding: 0px;
+  border-radius: 0px;
+  width: 1080px;
+  margin: auto;
+  justify-content: left;
+  
+}
+
+.terminal-output {
+  margin-bottom: 10px;
+}
+
+.terminal-input {
+  display: flex;
+  align-items: center;
+  span {
+    margin-right: 5px;
+  }
+  input {
+    background-color: transparent;
+    border: none;
+    color: white;
+    outline: none;
+  }
+}
