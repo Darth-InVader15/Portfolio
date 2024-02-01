@@ -35,7 +35,7 @@ function Terminal() {
     } 
 
     else{
-      switch(command)
+      switch(command)   //will be making seperate components in the future
       {
         case 'education':
         try {
