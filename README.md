@@ -1,4 +1,4 @@
-# Terminal styled portfolio
+# Terminal like portfolio
 
 # React + Vite
 
