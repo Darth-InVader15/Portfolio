@@ -9,7 +9,7 @@ function Terminal() {
 
   async function fetchArt() {
     try {
-      const response = await fetch("/assets/figlet.txt");
+      const response = await fetch("/files/figlet.txt");
       const art = await response.text();
       setFiglet(art);
     } catch (error) {
@@ -84,14 +84,11 @@ function Terminal() {
     }
     else{
       try {
-        if (window[command]) {
-          printOut (window[command]);
-        } 
-        const response = await fetch("/assets/${command}.txt");
+        const response = await fetch(`/files/${command}.txt`);
         console.log("here");
         // const cont = await response.text();
         // printOut(cont);
-        if(response.status === 200 && response.headers.get('content-type') === 'text/plain')
+        if(response.status === 200 && response.headers.get('content-type') === 'text/plain; charset=utf-8')
         {
           console.log("passed");
           const cont =  await response.text();
@@ -106,7 +103,7 @@ function Terminal() {
           }
           else var ment = "";
           let statement = ment +  " Here's a list of commands you can try:-\n\n " +
-           "about, connect, kanye, interests, techstack, projects, currentroles, gui\n";// + "Or try `kudo pop install fun` to install some fun commands";
+           "about, connect, kanye, interests, techstack, projects, currentroles, gui. \n" + "You can change the user by `setuser <your name>`";// + "Or try `kudo pop install fun` to install some fun commands";
           printOut(statement);      
         }
       } catch (error) {
