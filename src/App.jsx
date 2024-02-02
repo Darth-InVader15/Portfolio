@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 
 function Terminal() {
   const [input, setInput] = useState('');
-  const [output, setOutput] = useState(['Type `help` to see the list of available commands']);
+  const [output, setOutput] = useState(['Type `help` to see the list of available commands or `clear` to clear the screen' ]);
   const [figlet, setFiglet] = useState('');
   const [user, setUser] = useState('Guest'); // Default user name
+  
 
   async function fetchArt() {
     try {
-      const response = await fetch("/src/assets/figlet.txt");
+      const response = await fetch("/assets/figlet.txt");
       const art = await response.text();
       setFiglet(art);
     } catch (error) {
@@ -31,25 +32,65 @@ function Terminal() {
       const res = "User name set to: " + newUserName;
       printOut(res);  
     } 
-    // else if(command === "kudo pop install fun")
-    // {
-    //   response = "---------Done. \n" + "Try commands like `kanyeq` or `jokeme`";
-    // }
+    else if(command === "connect")
+    {
+      const response = (
+        <div>
+        <p>
+          <a href={`https://www.instagram.com/__i.r.i.d.e.s.c.e.n.t___/`} target="_blank" rel="noopener noreferrer">
+            Instagram
+          </a>
+        </p>
+        <p>
+          <a href={`https://www.linkedin.com/in/darthinvader5/`} target="_blank" rel="noopener noreferrer">
+            LinkedIn
+          </a>
+        </p>
+        <p>
+          <a href={`mailto:piyush.singh1315@gmail.com`} target="_blank" rel="noopener noreferrer">
+            Gmail
+          </a>
+        </p>
+        <p>
+          <a href={`https://github.com/Darth-InVader15`} target="_blank" rel="noopener noreferrer">
+            Github
+          </a>
+        </p>
+      </div>
+      );
+      // console.log(response);
+      printOut(response);
+    }
+    
     else if(command === 'clear')
       {
         setOutput([]);
       }
-    // else if(command === 'kanye')
-    // {
-    //     const response = await fetch("https://api.kanye.rest");
-    //     const txt = await response.data.quote;
-
-    //     printOut(txt);
-    // }
+    else if(command === 'kanye')
+    {
+      try {
+        const response = await fetch("https://api.kanye.rest");
+        const res = await response.json();
+    
+        if (res && res.quote) {
+          const txt = res.quote;
+          printOut("`" + txt + "` --Kanye West");
+        } else {
+          console.log("Error: Quote not found in the response");
+        }
+      } catch (error) {
+        console.error("Error fetching Kanye quote:", error);
+      }
+    }
     else{
       try {
-        const response = await fetch(`/src/assets/${command}.txt`);
+        if (window[command]) {
+          printOut (window[command]);
+        } 
+        const response = await fetch("/assets/${command}.txt");
         console.log("here");
+        // const cont = await response.text();
+        // printOut(cont);
         if(response.status === 200 && response.headers.get('content-type') === 'text/plain')
         {
           console.log("passed");
@@ -61,11 +102,11 @@ function Terminal() {
           console.log("failed");
           if(command !== "help" )
           {
-            var ment = "Command not recognized: " + command + ". ";
+            var ment = "Command not recognized: `" + command + "`. ";
           }
           else var ment = "";
           let statement = ment +  " Here's a list of commands you can try:-\n\n " +
-           "about, interests, techstack, projects, currentroles, gui\n";// + "Or try `kudo pop install fun` to install some fun commands";
+           "about, connect, kanye, interests, techstack, projects, currentroles, gui\n";// + "Or try `kudo pop install fun` to install some fun commands";
           printOut(statement);      
         }
       } catch (error) {
@@ -95,7 +136,7 @@ function Terminal() {
         ))}        
       </div>
 
-      <div className='footer'> Welcome to <span className='tit'>Darth-Shell</span>, a terminal themed portfolio page for <span className='tit'>Darth InVader</span></div>
+      <div className='footer'> Welcome to <span className='tit'>Darth-Shell</span>, a terminal themed page for <span className='tit'>Darth InVader</span></div>
       <div className="terminal-output">
         {output.map((line, index) => (
           <p key={index}>{line}</p>
